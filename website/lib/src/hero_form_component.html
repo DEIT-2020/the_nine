@@ -1,0 +1,72 @@
+<div class="container">
+  <div [hidden]="submitted">
+    <h1>注册账号</h1>
+    <form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+      <div class="form-group">
+        <label for="name">账号&nbsp;*</label>
+        <input type="text" class="form-control" id="name" required
+               [(ngModel)]="model.name"
+               #name="ngForm"
+               [class.is-valid]="name.valid"
+               [class.is-invalid]="!name.valid"
+               ngControl="name">
+        <div [hidden]="name.valid || name.pristine" class="invalid-feedback">
+          请填写账号
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="alterEgo">密码&nbsp;*</label>
+        <input type="text" class="form-control" id="alterEgo"
+               [(ngModel)]="model.alterEgo"
+               ngControl="alterEgo">
+      </div>
+      <div class="form-group">
+        <label for="power">年级&nbsp;*</label>
+        <select class="form-control" id="power" required
+                [(ngModel)]="model.power"
+                #power="ngForm"
+                [ngClass]="setCssValidityClass(power)"
+                ngControl="power">
+          <option *ngFor="let p of powers" [value]="p">{{p}}</option>
+        </select>
+      </div>
+      <div class="row">
+        <div class="col-auto">
+          <button [disabled]="!heroForm.form.valid" type="submit" class="btn btn-primary">
+            提交
+          </button>
+          <button (click)="clear()" type="button" class="btn">
+            清除
+          </button>
+
+          <button (click)="openIndex()" type="button" class="btn">
+            返回首页
+          </button>
+
+        </div>
+        <small class="col text-right">*&nbsp;必填</small>
+      </div>
+    </form>
+  </div>
+  <div [hidden]="!submitted">
+    <h1>注册信息</h1>
+
+    <table class="table">
+      <tr>
+        <th>账号</th>
+        <td>{{model.name}}</td>
+      </tr>
+      <tr>
+        <th>密码</th>
+        <td>{{model.alterEgo}}</td>
+      </tr>
+      <tr>
+        <th>年级</th>
+        <td>{{model.power}}</td>
+      </tr>
+    </table>
+
+    <button (click)="submitted=false" class="btn btn-primary">编辑</button>
+    
+  </div>
+</div>

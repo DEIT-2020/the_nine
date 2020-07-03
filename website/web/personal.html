@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>个人练习记录</title>
+    <script src="./js/jquery.js"></script>
+    <script src="./static/tableXR.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+</head>
+
+<body>
+    <div id="root" style="width: 800px"></div>
+    <script type="text/javascript">
+        $.ajax({
+            url: 'http://127.0.0.1:8888/center/1',
+            type: "GET",
+            data: {},
+            dataType: 'json',
+            contentType: 'application/json',
+            async: false,
+        }).success(function (res) {
+            var arr=[];
+            $.each(res,function(index,item) {
+                
+                arr.push({
+                    name:item['pid'],
+                    age:item['type'],
+                    store:item['rapid'],
+                    level:item['pnumber'],
+                })
+            })
+            $('#root').tableXR({
+                //表格标题
+                title: '个人练习记录',
+                //表格头部设置
+                columns: [
+                    { data: 'name', title: '练习编号' },
+                    { data: 'age', title: '题目类型' },
+                    { data: 'store', title: '时间' },
+                    { data: 'level', title: '总计题数' },
+                ],
+                //表格数据：
+                data: arr
+            })
+        });
+
+    </script>
+    <br>
+    <center>
+        <button type="button" onclick="location.href='./index.html'">返回首页</button>
+    </center>
+</body>
+
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>算24游戏</title>
+</head>
+
+<body onload="init();">
+<script language="JavaScript" type="text/javascript" src="./static/used.js"></script>
+<script language="JavaScript" type="text/javascript" src="./static/main.js"></script>
+<script language="javascript">
+    var number = new Array(), rnd4 = new Array();
+    var pubAnser, pubMyAnser;
+    var flag = true;
+    var itmp, ptmp;
+
+    
+    function init() {
+       
+        do {
+            for (i = 0; i < 4; i++) {
+                number[i] = parseInt(getRnd(10));
+            }
+        } while (fun2(parseInt(number[0]), parseInt(number[1]), parseInt(number[2]), parseInt(number[3])) == false)
+        
+        rnd4[0] = getRnd(4);
+        for (i = 1; i < 4; i++) {
+            do {
+                rnd4[i] = getRnd(4);
+            } while (isAt(i))
+        }
+        
+        for (i = 0; i < 4; i++) {
+            itmp = number[i];
+            ptmp = parseInt(itmp) > 9 ? itmp : "0" + itmp;
+            ptmp = "<img src='./static/images24/" + rnd4[i] + ptmp + ".jpg'>";
+            setHTML("n" + (i + 1), ptmp);
+        }
+    }
+
+    
+    function isAt(n) {
+        for (j = 0; j < n; j++) {
+            if (number[j] == number[n]) {
+                if (rnd4[j] == rnd4[n]) return true;
+            }
+        }
+        return false;
+    }
+
+    function anser() {
+        var san = getValue("manser");
+        if (isErrNumber(san)) {
+            if (eval(getValue("manser")) == 24) alert("�ش���ȷ�����������");
+            else alert("�ش���ˣ�����һ�Σ�");
+        } else {
+            alert("�벻Ҫ��������Ŀ�޹ص����֣�");
+        }
+    }
+
+    
+    function isErrNumber(san) {
+        for (i = 0; i < 4; i++) {
+            if (san.indexOf(number[i]) < 0) return false;
+        }
+        return true;
+    }
+
+    
+    function isAnser(number1, number2, number3, number4) {
+        //return fun2(number1,number2,number3,number4);
+    }
+
+    
+    function getAnser() {
+        setValue("hanser", pubAnser);
+    }
+
+    
+    function getMyAnser() {
+        var temp;
+        temp = pubAnser;
+        var nb1 = getValue("num1");
+        var nb2 = getValue("num2");
+        var nb3 = getValue("num3");
+        var nb4 = getValue("num4");
+        fun2(parseInt(nb1), parseInt(nb2), parseInt(nb3), parseInt(nb4));
+        setValue("num5", pubAnser);
+        pubAnser = temp;
+    }
+
+    
+    function Again() {
+        init();
+        setValue("manser", "");
+        setValue("hanser", "");
+    }
+
+    
+    function clean() {
+        setValue("num1", "");
+        setValue("num2", "");
+        setValue("num3", "");
+        setValue("num4", "");
+        setValue("num5", "");
+    }
+</script>
+<center>
+    <table width="600" border="0" align="center" cellpadding="3" cellspacing="0">
+        <tr>
+            <td>24点游戏</td>
+        </tr>
+        <tr>
+            <td>
+                <span id="n1"></span>&nbsp;
+                <span id="n2"></span>&nbsp;
+                <span id="n3"></span>&nbsp;
+                <span id="n4"></span></td>
+        </tr>
+        <tr>
+            <td>
+                回答
+                <input name="manser" type="text" id="manser"/>
+                <input type="button" name="Submit" value="提交" onclick="javascript:anser();"/>
+                <input type="button" name="Submit3" value="清除" onclick="javascript:setValue('manser','');"/></td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>帮助
+                <input name="hanser" type="text" id="hanser"/>
+                &nbsp;
+                <input type="button" name="Submit2" value="电脑解答" onclick="javascript:getAnser();"/></td>
+        </tr>
+        <tr>
+            <td><input type="button" name="Submit22" value="再来一次" onclick="javascript:Again();"/></td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>电脑帮你算24</td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellspacing="1" cellpadding="3">
+                    <tr>
+                        <td><input name="num1" type="text" id="num1" size="4"/></td>
+                        <td><input name="num2" type="text" id="num2" size="4"/></td>
+                        <td><input name="num3" type="text" id="num3" size="4"/></td>
+                        <td><input name="num4" type="text" id="num4" size="4"/></td>
+                        <td>=</td>
+                        <td><input name="num5" type="text" id="num5" size="20"/></td>
+                        <td><input type="button" name="Submit23" value="电脑帮你算" onclick="javascript:getMyAnser();"/></td>
+                        <td><input type="button" name="Submit32" value="清除" onclick="javascript:clean();"/></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td align="left">游戏规则<br>4张牌4个数字，每个数字只能使用一次且必需用一次，使用加减乘除算得24.</td>
+        </tr>
+    </table>
+</center>
+<center>
+    <button type="button" onclick="location.href='./index.html'">返回首页</button>
+</center>
+</body>
+</html>
